@@ -10,7 +10,8 @@ module.exports = {
     task: (_, {id}) => {
       console.log(typeof id)
       return tasks.find(task => task._id === id)
-    }
+    },
+    
   },
   Mutation: {
     createTask: (_, { input }) => {
@@ -20,9 +21,9 @@ module.exports = {
     }
   },
   Task: {
-    user: ({userId}) =>{
+    user: ({ userId }) =>{
       console.log('userId', userId)
       return users.find(user => user._id === userId)
     }
-  }
+  }  
 }
