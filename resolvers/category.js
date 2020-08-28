@@ -1,6 +1,6 @@
 module.exports={
   Query: {
-
+    categories: () => categories
   },
   Mutations: {
 
