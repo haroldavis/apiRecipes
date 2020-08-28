@@ -9,6 +9,6 @@ module.exports = {
     
   },
   User: {
-    tasks: ({_id}) => tasks.filter(task => task._id === _id)
+    tasks: ({_id}) => tasks.filter(task => task.userId === _id)
   }
 }

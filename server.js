@@ -3,12 +3,18 @@ const { ApolloServer, gql } = require('apollo-server-express');
 const cors = require('cors');
 const dotEnv = require('dotenv');
 
+dotEnv.config()
+
 const resolvers = require('./resolvers')
 const typeDefs = require('./typeDefs')
 
-dotEnv.config()
+const { connection } = require('./database/utils')
+
 
 const app = express()
+
+//db connected
+connection()
 
 app.use(cors())
 
