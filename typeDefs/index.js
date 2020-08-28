@@ -3,6 +3,18 @@ const userTypeDefs = require('./user')
 const recipeTypeDefs = require('./recipe')
 const categoryTypeDefs = require('./category')
 
-module.exports ={
-  
-}
+
+const typeDefs = gql`
+  type Query{
+
+  }
+  type Mutation{
+
+  }
+`
+module.exports = [
+  typeDefs,
+  userTypeDefs,
+  recipeTypeDefs,
+  categoryTypeDefs
+]
