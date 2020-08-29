@@ -2,7 +2,7 @@ module.exports={
   Query: {
     recipes: () => recipes
   },
-  Mutations: {
+  Mutation: {
 
   },
   Recipe: {

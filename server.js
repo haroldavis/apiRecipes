@@ -5,6 +5,8 @@ const dotEnv = require('dotenv');
 
 dotEnv.config()
 
+const resolvers = require('./resolvers')
+const typeDefs = require('./typeDefs')
 
 const { connection } = require('./database/util')
 
@@ -17,18 +19,6 @@ app.use(cors())
 
 app.use(express.json())
 
-const typeDefs = gql`
-  type Query {
-    greetings: [String!]
-    name: String
-  }
-`
-const resolvers = {
-  Query: {
-    greetings : () => ['hi', 'hello'],
-    name: () => 'harold'
-  }
-}
 
 const apolloServer = new ApolloServer({
   typeDefs,

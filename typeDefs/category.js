@@ -9,7 +9,7 @@ module.exports = gql`
     name: String
   }
 
-  extend type Mutations{
+  extend type Mutation{
     createCategory(input: createCategorInput): Category
   }
   

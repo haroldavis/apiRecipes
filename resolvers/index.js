@@ -4,6 +4,5 @@ const categoryResolver = require('./category')
 
 module.exports = [
   userResolver,
-  recipeResolver,
-  categoryResolver
+  
 ]
