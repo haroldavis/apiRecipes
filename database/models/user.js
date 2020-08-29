@@ -1,6 +1,6 @@
-const monngoose = require('mongoose');
+const mongoose = require('mongoose');
 
-const userSchema = new monngoose.Schema({
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -15,7 +15,7 @@ const userSchema = new monngoose.Schema({
   },
   tasks: [
     {
-      type: monngoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Task'
     }
   ]
