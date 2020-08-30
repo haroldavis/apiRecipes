@@ -6,7 +6,7 @@ module.exports = gql`
   }
 
   input createCategorInput{
-    name: String
+    name: String!
   }
 
   extend type Mutation{

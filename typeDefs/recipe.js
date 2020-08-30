@@ -9,7 +9,7 @@ module.exports = gql`
     name: String
     description: String!
     ingredients: String!
-    category: String!
+    
   }
   
   extend type Mutation{
@@ -21,6 +21,6 @@ module.exports = gql`
     name: String!
     description: String!
     ingredients: String!
-    category: String!
+    categories: [Category!]
   }
 `
