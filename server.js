@@ -9,6 +9,7 @@ const resolvers = require('./resolvers')
 const typeDefs = require('./typeDefs')
 
 const { connection } = require('./database/utils')
+const { verifyUser } = require('./helper/context')
 
 
 const app = express()
@@ -22,7 +23,15 @@ app.use(express.json())
 
 const apolloServer = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: ({ req }) => {
+    verifyUser(req)
+    console.log('context ====')
+    return {
+      email: "test@gmail.com" + Math.random()
+    }
+    
+  }
 })
 
 apolloServer.applyMiddleware({app, path: '/graphql' })
