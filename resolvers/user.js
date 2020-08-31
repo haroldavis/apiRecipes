@@ -6,7 +6,10 @@ const User = require('../database/models/user')
 module.exports={
   Query: {
     users: () => users,
-    user: (_, { _id }) => users.find(user => user._id === _id)
+    user: (_, { _id }, { email }) => {
+      console.log('email', email)
+      return users.find(user => user._id === _id)
+    }
   },
   Mutation: {
     signup: async (_, { input }) => {
