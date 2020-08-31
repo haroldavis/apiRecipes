@@ -24,11 +24,11 @@ app.use(express.json())
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => {
-    verifyUser(req)
+  context: async ({ req }) => {
+    await verifyUser(req)
     console.log('context ====')
     return {
-      email: "test@gmail.com" + Math.random()
+      email: req.email
     }
     
   }
