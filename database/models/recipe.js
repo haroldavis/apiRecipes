@@ -13,12 +13,14 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  categories: [
-    {
+  user:{
+    type: String,
+    required: true
+  },
+  categories: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'category'
-    }
-  ]
+      ref: 'Category'
+  }
 }, {
   timestamps: true
 });

@@ -21,6 +21,7 @@ module.exports = gql`
     name: String!
     description: String!
     ingredients: String!
-    categories: [Category!]
+    user: User
+    categories: Category
   }
-`
+` 

@@ -2,12 +2,13 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { combineResolvers } = require('graphql-resolvers')
 const User = require('../database/models/user')
-const { isAuthentication } = require('./middleware')
+const Recipe = require('../database/models/recipe')
+const { isAuthenticated } = require('./middleware')
 
 
 module.exports={
   Query: {
-    users: combineResolvers( isAuthentication, async (_, __, { email }) => {
+    user: combineResolvers( isAuthenticated, async (_, __, { email }) => {
       try {
         const user = await User.findOne({ email })
         if(!user){
@@ -56,10 +57,17 @@ module.exports={
         console.log('error')
         throw error
       }
-    },
-    
+    },    
   },
   User: {
-    recipes: ({_id}) => users.filter(recipe => recipe._id === _id)
+    recipes:  async ({ _id }) => {
+      try {
+        const recipes = await Recipe.findOne({ user: _id }) 
+        return recipes
+      } catch (error) {
+        console.log('error')
+        throw error
+      }
+    }
   }
 }
