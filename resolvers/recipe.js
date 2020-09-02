@@ -14,15 +14,15 @@ module.exports={
         throw error
       }
     }),
-    recipe: combineResolvers( isAuthenticated, isRecipeOwner, async (_, { _id }) => {
+    recipe: combineResolvers(isAuthenticated, isRecipeOwner, async(_, { _id } ) => {
       try {
-        const recipe = await Recipe.findById(_id)
+        const recipe = await Recipe.findOne(_id)
         return recipe
       } catch (error) {
         console.log(error)
         throw error
       }
-    })
+   })
   },
   Mutation: {
     createRecipe: combineResolvers(isAuthenticated, async (_, { input }, { email }) => {
@@ -38,5 +38,8 @@ module.exports={
         throw error
       }
     }) 
+  },
+  Recipe: {
+    
   }
 }

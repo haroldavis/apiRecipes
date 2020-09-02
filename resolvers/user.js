@@ -62,7 +62,7 @@ module.exports={
   User: {
     recipes:  async ({ _id }) => {
       try {
-        const recipes = await Recipe.findOne({ user: _id }) 
+        const recipes = await Recipe.find({ user: _id }) 
         return recipes
       } catch (error) {
         console.log('error')

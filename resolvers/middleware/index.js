@@ -8,18 +8,18 @@ module.exports.isAuthenticated = (_, __, { email }) => {
   return skip
 }
 
-module.exports.isRecipeOwner = async(_, { _id }, { loggedInUserId }) => {
-  try {
-    const recipe = await Recipe.findById(_id)
+module.exports.isRecipeOwner = async (_, { _id }, {loggedInUserId} ) => {
+    try {
+      const recipe = await Recipe.findById(_id)
     if(!recipe){
-      throw new Error('recipe not found')
-    } else if(recipe.user.toString() !== loggedInUserId ){
-      throw new Error('Not authorizated as recipe owner')
+      throw new Error('user not found')
+    }else if( recipe.user.toString() !== loggedInUserId){
+      console.log(recipe.user)
+      throw new Error('Not Authorized as recipe owner')
     }
     return skip
   } catch (error) {
     console.log(error)
     throw error
   }
- 
 }
