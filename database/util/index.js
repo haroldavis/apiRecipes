@@ -7,6 +7,9 @@ module.exports.connection = async () => {
   }catch(error){
     console.log(error)
     throw error
-  }
-  
+  }  
+}
+
+module.exports.isValidationObjectId = (_id) => {
+  return mongoose.Types.ObjectId.isValid(_id)
 }

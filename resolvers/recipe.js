@@ -14,7 +14,7 @@ module.exports={
         throw error
       }
     }),
-    recipe: combineResolvers(isAuthenticated, isRecipeOwner, async(_, { _id } ) => {
+    recipe: combineResolvers(isAuthenticated, isRecipeOwner, async (_, { _id } ) => {
       try {
         const recipe = await Recipe.findOne(_id)
         return recipe
@@ -40,6 +40,14 @@ module.exports={
     }) 
   },
   Recipe: {
-    
+    user: async (parent) => {
+      try {
+        const user = await User.findById(parent.user)
+        return user
+      } catch (error) {
+        console.log('error')
+        throw error
+      }
+    }
   }
 }
