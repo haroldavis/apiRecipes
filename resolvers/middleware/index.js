@@ -1,6 +1,6 @@
 const { skip } = require('graphql-resolvers')
 const Recipe = require('../../database/models/recipe')
-const { isValidationObjectId } = require('../../database/util')
+const { isValidadObjectId } = require('../../database/util')
 
 module.exports.isAuthenticated = (_, __, { email }) => {
   if(!email){
@@ -9,16 +9,16 @@ module.exports.isAuthenticated = (_, __, { email }) => {
   return skip
 };
 
-module.exports.isRecipeOwner = async (_, { _id }, { loggedInUserId } ) => {
+module.exports.isRecipeOwner = async (_, { _id }, { loggerdInUserId } ) => {
   try {
-    if(!isValidationObjectId){
+    if(!isValidadObjectId(_id)){
         throw new Error('invalid Recipe Id')
     }
-      const recipe = await Recipe.findById(_id)
+    const recipe = await Recipe.findById(_id)
     if(!recipe){
-      throw new Error('user not found')
-    }else if( recipe.user.toString() !== loggedInUserId){
-      console.log(recipe.user)
+      throw new Error('recipe not found')
+    }else if( recipe.user.toString() !== loggerdInUserId){
+      console.log(recipe)
       throw new Error('Not Authorized as recipe owner')
     }
     return skip

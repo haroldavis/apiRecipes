@@ -10,6 +10,6 @@ module.exports.connection = async () => {
   }  
 }
 
-module.exports.isValidationObjectId = (_id) => {
+module.exports.isValidadObjectId = (_id) => {
   return mongoose.Types.ObjectId.isValid(_id)
 }
