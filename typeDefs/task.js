@@ -3,13 +3,12 @@ const { gql } = require('apollo-server-express');
 module.exports = gql`
   extend type Query {
     tasks: [Task!]
-    task(id: ID!): Task   
+    task(_id: ID!): Task   
   }
 
   input createTaskInput{
     name: String!
-    completed: Boolean!
-    
+    completed: Boolean!    
   }
 
   extend type Mutation{

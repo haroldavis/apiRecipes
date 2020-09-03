@@ -30,8 +30,7 @@ const apolloServer = new ApolloServer({
     return {
       email: req.email,
       loggedInUserId: req.loggedInUserId
-    }
-    
+    }    
   }
 })
 

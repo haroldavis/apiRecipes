@@ -8,7 +8,7 @@ const { isAuthenticated } = require('./middleware')
 
 module.exports = {
   Query: {   
-    users: combineResolvers(isAuthenticated, async (_, __, { email }) =>{
+    user: combineResolvers(isAuthenticated, async (_, __, { email }) =>{
         try {
           const user = await User.findOne({email})
           if(!user){
@@ -63,7 +63,7 @@ module.exports = {
   User: {
     tasks: async ({ _id }) => {
       try {
-        const tasks = await Task.findOne({ user: _id})
+        const tasks = await Task.find({ user: _id})
         return tasks
       } catch (error) {
         console.log(error)
