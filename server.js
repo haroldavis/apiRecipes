@@ -28,7 +28,8 @@ const apolloServer = new ApolloServer({
     await verifyUser(req)
     console.log('context ====')
     return {
-      email: req.email
+      email: req.email,
+      loggedInUserId: req.loggedInUserId
     }
     
   }
