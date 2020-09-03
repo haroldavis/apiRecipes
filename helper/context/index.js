@@ -7,12 +7,12 @@ module.exports.verifyUser = async (req) => {
     req.loggedInUserId = null;
     const bearerHeader = req.headers.authorization
     if(bearerHeader){
-    const token = bearerHeader.split(' ')[1];
-    console.log('token ====', token)
-    const payload = jwt.verify(token, process.env.JWT_SECRET_KEY || 'mysecretkey' )
-    req.email = payload.email
-    const user = await User.findOne({ email: payload.email })
-    req.loggedInUserId = user._id
+      const token = bearerHeader.split(' ')[1];
+      console.log('token ====', token)
+      const payload = jwt.verify(token, process.env.JWT_SECRET_KEY || 'mysecretkey' )
+      req.email = payload.email
+      const user = await User.findOne({ email: payload.email })
+      req.loggedInUserId = user._id
     }  
   } catch (error) {
     console.log(error)

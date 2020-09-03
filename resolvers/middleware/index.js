@@ -13,7 +13,7 @@ module.exports.isTaskOwner = async (_, { _id }, { loggedInUserId } ) => {
     const task = await Task.findById(_id)
     if(!task){
       throw new Error('task not found')
-    } else if( task.user.toString() !== loggedInUserId){
+    } else if( task.user.toString() !== loggedInUserId ){
       throw new Error('Not Authorized as task owner')
     }
     

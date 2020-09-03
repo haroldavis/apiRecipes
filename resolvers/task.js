@@ -6,9 +6,9 @@ const { isAuthenticated, isTaskOwner } = require('./middleware')
 
 module.exports = {
   Query: {
-    tasks: combineResolvers(isAuthenticated, async (_, __, { loggerInUserId } ) => {
+    tasks: combineResolvers(isAuthenticated, async (_, __, { loggedInUserId } ) => {
       try {
-        const tasks = await Task.find({ user: loggerInUserId })
+        const tasks = await Task.find({ user: loggedInUserId })
         return tasks
       } catch (error) {
         console.log(error)
@@ -29,7 +29,7 @@ module.exports = {
     createTask: combineResolvers(isAuthenticated, async (_, { input }, { email } ) => {
       try {
         const user = await User.findOne({ email })
-        const task = new Task({...input, user: user._id})
+        const task = new Task({ ...input, user: user._id})
         const result = await task.save()
         user.tasks.push(result._id)
         await user.save()
