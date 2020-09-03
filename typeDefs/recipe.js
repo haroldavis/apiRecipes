@@ -14,6 +14,13 @@ module.exports = gql`
   
   extend type Mutation{
     createRecipe(input: createRecipeInput!): Recipe
+    updateRecipe(id: ID!, input: updateRecipeInput): Recipe
+  }
+
+  input updateRecipeInput{
+    name: String!
+    description: String!
+    ingredients: String!
   }
   
   type Recipe{

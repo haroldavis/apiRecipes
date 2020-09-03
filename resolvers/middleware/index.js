@@ -9,10 +9,11 @@ module.exports.isAuthenticated = (_, __, { email }) => {
   return skip
 };
 
+// there is a problem with loggerdInUserId because for to list a recipe by Id
 module.exports.isRecipeOwner = async (_, { _id }, { loggerdInUserId } ) => {
   try {
     if(!isValidadObjectId(_id)){
-        throw new Error('invalid Recipe Id')
+      throw new Error('invalid Recipe Id')
     }
     const recipe = await Recipe.findById(_id)
     if(!recipe){

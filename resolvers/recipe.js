@@ -37,6 +37,15 @@ module.exports={
         console.log('error')
         throw error
       }
+    }),
+    updateRecipe: combineResolvers(isAuthenticated, isRecipeOwner, async (_, { _id, input }) => {
+      try {
+        const recipe = await Recipe.findByIdAndUpdate(_id, { ...input })
+        return recipe
+      } catch (error) {
+        console.log('error')
+        throw error
+      }      
     }) 
   },
   Recipe: {
