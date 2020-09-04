@@ -5,9 +5,9 @@ const { isAuthenticated, isRecipeOwner } = require('./middleware')
 
 module.exports={
   Query: {
-    recipes: combineResolvers( isAuthenticated, async (_, __, { loggedInUserId }) => {
+    recipes: combineResolvers( isAuthenticated, async (_, {skip=0, limit=10  }, { loggedInUserId }) => {
       try {
-        const recipes = await Recipe.find({ user: loggedInUserId })
+        const recipes = await Recipe.find({ user: loggedInUserId }).sort({ _id: -1 }).skip(skip).limit(limit)
         return recipes
       } catch (error) {
         console.log(error)
@@ -46,6 +46,16 @@ module.exports={
         console.log('error')
         throw error
       }      
+    }),
+    deleteRecipe: combineResolvers(isAuthenticated, async( _, { _id }, { loggedInUserId }) => {
+      try {
+        const recipe = await Recipe.findByIdAndDelete(_id)
+        await User.updateOne({ _id: loggedInUserId }, { $pull: { recipes: recipe._id } })
+        return recipe
+      } catch (error) {
+        console.log('error')
+        throw error
+      }
     }) 
   },
   Recipe: {

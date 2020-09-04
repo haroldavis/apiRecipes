@@ -2,7 +2,7 @@ const { gql } = require('apollo-server-express');
 
 module.exports = gql`
   extend type Query{
-    recipes: [Recipe!]
+    recipes(skip: Int, limit: Int): [Recipe!]
     recipe(_id: ID!): Recipe
   }
 
@@ -12,13 +12,14 @@ module.exports = gql`
     ingredients: String!    
   }
   
+  input updateRecipeInput{
+    name: String!
+  }
+
   extend type Mutation{
     createRecipe(input: createRecipeInput!): Recipe
     updateRecipe(_id: ID!, input: updateRecipeInput): Recipe
-  }
-
-  input updateRecipeInput{
-    name: String!
+    deleteRecipe(_id: ID!): Recipe
   }
   
   type Recipe{
