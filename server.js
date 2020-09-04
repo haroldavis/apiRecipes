@@ -29,7 +29,7 @@ const apolloServer = new ApolloServer({
     console.log('context ran====')
     return {
       email: req.email,
-      loggerdInUserId: req.loggerdInUserId
+      loggedInUserId: req.loggedInUserId
     }
   }
 })

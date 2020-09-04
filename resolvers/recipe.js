@@ -5,16 +5,16 @@ const { isAuthenticated, isRecipeOwner } = require('./middleware')
 
 module.exports={
   Query: {
-    recipes: combineResolvers( isAuthenticated, async (_, __, { loggerdInUserId }) => {
+    recipes: combineResolvers( isAuthenticated, async (_, __, { loggedInUserId }) => {
       try {
-        const recipes = await Recipe.find({ user: loggerdInUserId })
+        const recipes = await Recipe.find({ user: loggedInUserId })
         return recipes
       } catch (error) {
         console.log(error)
         throw error
       }
     }),
-    recipe: combineResolvers(isAuthenticated, isRecipeOwner, async (_, { _id } ) => {
+    recipe: combineResolvers( isAuthenticated, async (_, { _id }) => {
       try {
         const recipe = await Recipe.findById(_id)
         return recipe
@@ -22,7 +22,7 @@ module.exports={
         console.log(error)
         throw error
       }
-   })
+    }),
   },
   Mutation: {
     createRecipe: combineResolvers(isAuthenticated, async (_, { input }, { email }) => {
@@ -38,9 +38,9 @@ module.exports={
         throw error
       }
     }),
-    updateRecipe: combineResolvers(isAuthenticated, isRecipeOwner, async (_, { _id, input }) => {
+    updateRecipe: combineResolvers(isAuthenticated, async (_, { _id, input }) => {
       try {
-        const recipe = await Recipe.findByIdAndUpdate(_id, { ...input })
+        const recipe = await Recipe.findByIdAndUpdate(_id, { ...input }, {new: true})
         return recipe
       } catch (error) {
         console.log('error')
