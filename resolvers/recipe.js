@@ -14,7 +14,7 @@ module.exports={
         throw error
       }
     }),
-    recipe: combineResolvers( isAuthenticated, async (_, { _id }) => {
+    recipe: combineResolvers( isAuthenticated, isRecipeOwner, async (_, { _id }) => {
       try {
         const recipe = await Recipe.findById(_id)
         return recipe
@@ -38,7 +38,7 @@ module.exports={
         throw error
       }
     }),
-    updateRecipe: combineResolvers(isAuthenticated, async (_, { _id, input }) => {
+    updateRecipe: combineResolvers(isAuthenticated, isRecipeOwner, async (_, { _id, input }) => {
       try {
         const recipe = await Recipe.findByIdAndUpdate(_id, { ...input }, {new: true})
         return recipe
@@ -47,7 +47,7 @@ module.exports={
         throw error
       }      
     }),
-    deleteRecipe: combineResolvers(isAuthenticated, async( _, { _id }, { loggedInUserId }) => {
+    deleteRecipe: combineResolvers(isAuthenticated, isRecipeOwner, async( _, { _id }, { loggedInUserId }) => {
       try {
         const recipe = await Recipe.findByIdAndDelete(_id)
         await User.updateOne({ _id: loggedInUserId }, { $pull: { recipes: recipe._id } })

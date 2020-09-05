@@ -19,7 +19,7 @@ module.exports.isRecipeOwner = async (_, { _id }, { loggedInUserId } ) => {
 
     if (!recipe){
       throw new Error('recipe not found')
-    } else if ( recipe.user.toString() !== loggedInUserId ){
+    } else if ( recipe.user.toString() != loggedInUserId ){
       console.log(recipe)
       console.log(recipe.user)      
       console.log(loggedInUserId)      
