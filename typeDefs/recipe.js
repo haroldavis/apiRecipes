@@ -28,6 +28,8 @@ module.exports = gql`
     description: String!
     ingredients: String!
     user: User!
-    categories: Category
+    category: Category
+    createdAt: Date!
+    updatedAt: Date!
   }
 ` 

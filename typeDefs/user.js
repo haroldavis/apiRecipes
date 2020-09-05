@@ -30,6 +30,7 @@ module.exports = gql`
     name: String!
     email: String!
     recipes: [Recipe!]  
+    categories: [Category!]
     createdAt: Date!
     updatedAt: Date!
   }

@@ -1,24 +1,34 @@
+const { combineResolvers } = require('graphql-resolvers')
 const Category = require('../database/models/category')
+const User = require('../database/models/user')
+const { isAuthenticated, isCategoryOwner } = require('./middleware')
 
 module.exports={
   Query: {
-    categories: () => categories
+    categories: combineResolvers(isAuthenticated, async (_, __, { loggedInUserId  }) => {
+      try {
+        const categories = await Category.find({ user: loggedInUserId })
+        console.log(categories)
+        return categories
+      } catch (error) {
+        console.log(error)
+        throw error
+      }      
+    })
   },
   Mutation: {
-    createCategory: async (_, { input }) => {
+    createCategory: combineResolvers(isAuthenticated, async (_, { input }, { email }) => {
       try {
-        const category = await Category.findOne({ name: input.name})
-        if(category){
-          throw new Error('Category already exist')
-        }
-        const newCategory = new Category({...input})
-        const result = await newCategory.save()
-
+        const user = await User.findOne({ email })
+        const category = new Category({ ...input , user: user._id })
+        const result = await category.save()
+        user.categories.push(result._id)
+        await user.save()
         return result
       } catch (error) {
         console.log(error)
         throw error
       }
-    }
+    })
   }
 }
