@@ -10,13 +10,20 @@ module.exports = gql`
     name: String!
   }
 
+  input updateCategoryInput{
+    name: String!
+  }
+
   extend type Mutation{
     createCategory(input: createCategoryInput!): Category
+    updateCategory(_id: ID!, input: updateCategoryInput!): Category
+    deleteCategory(_id: ID!): Category
   }
   
   type Category{
     _id: ID!
     name: String!
+    user: User!
     createdAt: Date!
     updatedAt: Date!
   }

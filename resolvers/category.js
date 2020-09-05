@@ -14,6 +14,15 @@ module.exports={
         console.log(error)
         throw error
       }      
+    }),
+    category: combineResolvers(isAuthenticated, isCategoryOwner, async(_, { _id }) => {
+      try {
+        const category = await Category.findById(_id)
+        return category 
+      } catch (error) {
+        console.log(error)
+        throw error
+      }
     })
   },
   Mutation: {
@@ -29,6 +38,36 @@ module.exports={
         console.log(error)
         throw error
       }
+    }),
+    updateCategory: combineResolvers(isAuthenticated, isCategoryOwner, async(_, { _id, input }) => {
+      try {
+        const category = await Category.findByIdAndUpdate(_id, { ...input }, {new: true})
+        return category
+      } catch (error) {
+        console.log('error')
+        throw error
+      }
+    }),
+    deleteCategory: combineResolvers(isAuthenticated, isCategoryOwner, async(_, { _id }, { loggedInUserId }) => {
+      try {
+        const category = await Category.findByIdAndDelete(_id)
+        await Category.updateOne({ _id: loggedInUserId }, { $pull: { categories: category._id } })
+        return category
+      } catch (error) {
+        console.log('error')
+        throw error
+      }
     })
+  },
+  Category: {
+    user: async (parent) => {
+      try {
+        const user = await User.findById(parent.user)
+        return user
+      } catch (error) {
+        console.log(error)
+        throw error
+      }
+    }
   }
 }
