@@ -5,10 +5,24 @@ const { isAuthenticated, isRecipeOwner } = require('./middleware')
 
 module.exports={
   Query: {
-    recipes: combineResolvers( isAuthenticated, async (_, {skip=0, limit=10  }, { loggedInUserId }) => {
+    recipes: combineResolvers( isAuthenticated, async (_, {cursor, limit=10  }, { loggedInUserId }) => {
       try {
-        const recipes = await Recipe.find({ user: loggedInUserId }).sort({ _id: -1 }).skip(skip).limit(limit)
-        return recipes
+        const query = { user: loggedInUserId }
+        if(cursor){
+          query['_id'] = {
+            '$lt' : cursor
+          }
+        }
+        let recipes = await Recipe.find(query).sort({ _id: -1 }).limit(limit + 1)
+        const hasNextPage = recipes.length > limit
+        recipes = hasNextPage ? recipes.slice(0, -1) : recipes
+        return {
+          recipeFeed: recipes,
+          pageInfo: {
+            nextPageCursor : hasNextPage ? recipes[recipes.length - 1].id : null,
+            hasNextPage
+          }
+        }
       } catch (error) {
         console.log(error)
         throw error
