@@ -2,6 +2,7 @@ const { combineResolvers } = require('graphql-resolvers')
 const Recipe = require('../database/models/recipe')
 const User = require('../database/models/user')
 const { isAuthenticated, isRecipeOwner } = require('./middleware')
+const { stringToBase64, base64ToString } = require('../helper')
 
 module.exports={
   Query: {
@@ -10,7 +11,7 @@ module.exports={
         const query = { user: loggedInUserId }
         if(cursor){
           query['_id'] = {
-            '$lt' : cursor
+            '$lt' : base64ToString(cursor)
           }
         }
         let recipes = await Recipe.find(query).sort({ _id: -1 }).limit(limit + 1)
@@ -19,7 +20,7 @@ module.exports={
         return {
           recipeFeed: recipes,
           pageInfo: {
-            nextPageCursor : hasNextPage ? recipes[recipes.length - 1].id : null,
+            nextPageCursor : hasNextPage ? stringToBase64(recipes[recipes.length - 1].id) : null,
             hasNextPage
           }
         }
