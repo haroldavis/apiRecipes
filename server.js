@@ -2,6 +2,7 @@ const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
 const cors = require('cors');
 const dotEnv = require('dotenv');
+const Dataloader = require('dataloader')
 
 dotEnv.config()
 
@@ -10,6 +11,7 @@ const typeDefs = require('./typeDefs')
 
 const { connection } = require('./database/util')
 const { verifyUser } = require('./helper/context/index')
+const loaders = require('./loaders')
 
 const app = express()
 
@@ -26,10 +28,12 @@ const apolloServer = new ApolloServer({
   resolvers,
   context: async ({req}) => {
     await verifyUser(req)
-    console.log('context ran====')
     return {
       email: req.email,
-      loggedInUserId: req.loggedInUserId
+      loggedInUserId: req.loggedInUserId,
+      loaders: {
+        user: new Dataloader(keys => loaders.user.batchUser(keys))
+      }
     }
   }
 })
