@@ -1,2 +1,11 @@
-# apiRecipes
-Building a recipe API for users. i will use technologys like node and graphQl
+# 🧾apiRecipes
+
+API for recipes where each new user have his own recipes.
+
+## Prerequisites
+
+you will need to have:
+
+```
+npm(Node Package Manager)
+```
