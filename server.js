@@ -32,7 +32,7 @@ const apolloServer = new ApolloServer({
       email: req.email,
       loggedInUserId: req.loggedInUserId,
       loaders: {
-        user: new Dataloader(keys => loaders.user.batchUser(keys))
+        user: new Dataloader(keys => loaders.user.batchUsers(keys))
       }
     }
   }

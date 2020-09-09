@@ -4,6 +4,7 @@ const User = require('../database/models/user')
 const { isAuthenticated, isRecipeOwner } = require('./middleware')
 const { stringToBase64, base64ToString } = require('../helper')
 
+
 module.exports={
   Query: {
     recipes: combineResolvers( isAuthenticated, async (_, {cursor, limit=10  }, { loggedInUserId }) => {
@@ -20,6 +21,7 @@ module.exports={
         return {
           recipeFeed: recipes,
           pageInfo: {
+            //
             nextPageCursor : hasNextPage ? stringToBase64(recipes[recipes.length - 1].id) : null,
             hasNextPage
           }
@@ -74,9 +76,10 @@ module.exports={
     }) 
   },
   Recipe: {
-    user: async (parent) => {
+    user: async (parent, _, { loaders }) => {
       try {
-        const user = await User.findById(parent.user)
+        //const user = await User.findById(parent.user)
+        const user = await loaders.user.load(parent.user.toString())
         return user
       } catch (error) {
         console.log('error')
