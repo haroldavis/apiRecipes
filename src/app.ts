@@ -2,7 +2,7 @@ import express = require('express')
 import { ApolloServer } from 'apollo-server-express'
 
 import { buildSchema } from 'type-graphql'
-import { ProductResolver } from './resolver/ProductResolver'
+import { ProductResolver } from './resolvers/ProductResolver'
 
 export async function startServer() {
     const app = express()
