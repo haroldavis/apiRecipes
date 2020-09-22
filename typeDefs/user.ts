@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+import { gql } from 'apollo-server-express';
 
 module.exports = gql`
   extend type Query{
@@ -26,7 +26,7 @@ module.exports = gql`
   }
 
   type User{
-    _id: ID!
+    id: ID!
     name: String!
     email: String!
     recipes: [Recipe!]  

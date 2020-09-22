@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
-const User = require('../../database/models/user')
+const User = require('../../database/entity/user')
 
 
-module.exports.verifyUser = async (req) => {
+module.exports.verifyUser = async (req: any) => {
   try {
     req.email = null;
     req.loggedInUserId = null;

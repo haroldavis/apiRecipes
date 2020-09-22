@@ -1,6 +1,6 @@
-const { combineResolvers } = require('graphql-resolvers')
-const Category = require('../database/models/category')
-const User = require('../database/models/user')
+import { combineResolvers } from 'graphql-resolvers'
+const Category = require('../database/entity/category')
+const User = require('../database/entity/user')
 const { isAuthenticated, isCategoryOwner } = require('./middleware')
 
 module.exports={
@@ -60,7 +60,7 @@ module.exports={
     })
   },
   Category: {
-    user: async (parent) => {
+    user: async (parent: any) => {
       try {
         const user = await User.findById(parent.user)
         return user

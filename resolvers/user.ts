@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { combineResolvers } = require('graphql-resolvers')
-const User = require('../database/models/user')
-const Recipe = require('../database/models/recipe')
+import { combineResolvers } from 'graphql-resolvers'
+const User = require('../database/entity/user')
+const Recipe = require('../database/entity/recipe')
 const { isAuthenticated } = require('./middleware')
 
 
@@ -22,7 +22,7 @@ module.exports={
     })   
   },
   Mutation: {
-    signup: async (_, { input }) => {
+    signup: async (_: any, { input } : any) => {
       try{
         const user = await User.findOne({ email: input.email })
         if(user){
@@ -38,7 +38,7 @@ module.exports={
         throw error
       }
     },
-    login: async (_, { input }) => {
+    login: async (_: any, { input }: any) => {
       try { 
         const user = await User.findOne({ email: input.email })
         if(!user){
@@ -60,7 +60,7 @@ module.exports={
     },    
   },
   User: {
-    recipes:  async ({ _id }) => {
+    recipes:  async ({ _id }: any) => {
       try {
         const recipes = await Recipe.find({ user: _id }) 
         return recipes

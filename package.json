@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon src/index.ts --exc ts-node"
+    "dev": "nodemon app.ts --exc ts-node"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.8",
+    "@types/graphql-resolvers": "^0.3.0",
     "@types/node": "^14.10.0",
     "nodemon": "^2.0.4",
     "ts-node": "^9.0.0",

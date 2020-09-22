@@ -1,10 +1,10 @@
 const { skip } = require('graphql-resolvers')
 const Recipe = require('../../database/models/recipe')
 const Category = require('../../database/models/category')
-const { isValidadObjectId } = require('../../database/util');
+//const { isValidadObjectId } = require('../../database/util');
 
 
-module.exports.isAuthenticated = (_, __, { email }) => {
+module.exports.isAuthenticated = (_: any, __: any, { email }: any) => {
   if(!email){
     throw new Error('Acces deniend, please login to continue')
   }
@@ -12,11 +12,11 @@ module.exports.isAuthenticated = (_, __, { email }) => {
 };
 
 // there is a problem with loggerdInUserId because for to list a recipe by Id
-module.exports.isRecipeOwner = async (_, { _id }, { loggedInUserId } ) => {
+module.exports.isRecipeOwner = async (_: any, { _id }: any, { loggedInUserId }: any ) => {
   try {
-    if(!isValidadObjectId(_id)){
+   /*  if(!isValidadObjectId(_id)){
       throw new Error('invalid Recipe Id')
-    }
+    } */
     const recipe = await Recipe.findById(_id)
 
     if (!recipe){
@@ -35,11 +35,11 @@ module.exports.isRecipeOwner = async (_, { _id }, { loggedInUserId } ) => {
   }
 };
 
-module.exports.isCategoryOwner = async (_, { _id }, { loggedInUserId } ) => {
+module.exports.isCategoryOwner = async (_: any, { _id }: any, { loggedInUserId } : any) => {
   try {
-    if(!isValidadObjectId(_id)){
+   /*  if(!isValidadObjectId(_id)){
       throw new Error('invalid Category Id')
-    }
+    } */
     const category = await Category.findById(_id)
 
     if (!category){

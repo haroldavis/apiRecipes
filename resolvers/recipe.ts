@@ -1,18 +1,14 @@
-const { combineResolvers } = require('graphql-resolvers')
-const Recipe = require('../database/models/recipe')
-const User = require('../database/models/user')
+import { combineResolvers } from 'graphql-resolvers'
+const Recipe = require('../database/entity/recipe')
+const User = require('../database/entity/user')
 const { isAuthenticated, isRecipeOwner } = require('./middleware')
 
 module.exports={
   Query: {
-    recipes: combineResolvers( isAuthenticated, async (_, {cursor, limit=10  }, { loggedInUserId }) => {
+    recipes: combineResolvers( isAuthenticated, async (_, { limit=10  }, { loggedInUserId }) => {
       try {
         const query = { user: loggedInUserId }
-        if(cursor){
-          query['_id'] = {
-            '$lt' : cursor
-          }
-        }
+       
         let recipes = await Recipe.find(query).sort({ _id: -1 }).limit(limit + 1)
         const hasNextPage = recipes.length > limit
         recipes = hasNextPage ? recipes.slice(0, -1) : recipes
@@ -73,7 +69,7 @@ module.exports={
     }) 
   },
   Recipe: {
-    user: async (parent) => {
+    user: async (parent: any) => {
       try {
         const user = await User.findById(parent.user)
         return user
